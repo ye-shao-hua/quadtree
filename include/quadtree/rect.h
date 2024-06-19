@@ -15,6 +15,7 @@ public:
   float y_center() const;
   Rect subrect(int select) const;
   Point center() const;
+  float area() const;
 
 private:
   float _x_min;

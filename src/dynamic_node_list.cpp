@@ -18,7 +18,7 @@ void DynamicNodeList::push_back(NodeViewer node) {
     _nodes = new_nodes;
     _capacity = new_capacity;
   }
-  _nodes[_size++] = node.data();
+  _nodes[_size++] = node;
 }
 bool DynamicNodeList::empty() const { return _size == 0; }
 DynamicNodeList::index_type DynamicNodeList::size() const { return _size; }

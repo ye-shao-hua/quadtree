@@ -32,5 +32,6 @@ Rect Rect::subrect(int select) const {
 Point Rect::center() const {
   return {(x_min() + x_max()) / 2.f, (y_min() + y_max()) / 2.f};
 }
+float Rect::area() const { return (x_max() - x_min()) * (y_max() - y_min()); }
 
 } // namespace quadtree

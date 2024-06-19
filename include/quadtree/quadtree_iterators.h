@@ -4,19 +4,18 @@ namespace quadtree {
 
 class Quadtree;
 class NodeIterator;
-class DynamicNodeList;
 class NodeViewer;
 
 class QuadtreeIterators {
 public:
   QuadtreeIterators(Quadtree &quadtree);
-  ~QuadtreeIterators();
-  NodeIterator begin();
-  NodeIterator end();
-private:
+  virtual NodeIterator begin();
+  virtual NodeIterator end();
+
+protected:
   void _emplace(NodeViewer node);
 
-private:
-  DynamicNodeList* _node_list;
+protected:
+  Quadtree &_quadtree;
 };
 } // namespace quadtree

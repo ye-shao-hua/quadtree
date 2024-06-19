@@ -5,19 +5,25 @@
 #include "../include/quadtree/quadtree.h"
 
 namespace quadtree {
-QuadtreeIterators::QuadtreeIterators(Quadtree &quadtree) {
-  _node_list = new DynamicNodeList;
+QuadtreeIterators::QuadtreeIterators(Quadtree &quadtree) : _quadtree(quadtree) {
+  if (quadtree._cache_node_list)
+    return;
+  quadtree._cache_node_list = new DynamicNodeList;
+  quadtree._cache_active_node_list = new DynamicNodeList;
   _emplace(&quadtree._data);
 }
 NodeIterator QuadtreeIterators::begin() {
-  return _node_list->iterators().begin();
+  return _quadtree._cache_node_list->iterators().begin();
 }
-NodeIterator QuadtreeIterators::end() { return _node_list->iterators().end(); }
+NodeIterator QuadtreeIterators::end() {
+  return _quadtree._cache_node_list->iterators().end();
+}
 void QuadtreeIterators::_emplace(NodeViewer node) {
-  _node_list->push_back(node);
+  _quadtree._cache_node_list->push_back(node);
   if (node->has_child())
     for (NodeViewer &it : node->child_iterators())
       _emplace(it);
+  else
+    _quadtree._cache_active_node_list->push_back(node);
 }
-QuadtreeIterators::~QuadtreeIterators() { delete _node_list; }
 } // namespace quadtree

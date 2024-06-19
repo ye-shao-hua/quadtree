@@ -4,13 +4,19 @@ AR=ar rcs
 SRC=./src
 INC=./include/quadtree
 TMP=./.tmp
+FILES=${TMP}/rect.o ${TMP}/quadtree.o ${TMP}/point.o \
+			${TMP}/node.o ${TMP}/trapezium.o ${TMP}/node_accessor.o \
+			${TMP}/node_pool.o ${TMP}/node_iterator.o \
+			${TMP}/node_iterators.o ${TMP}/node_viewer.o \
+			${TMP}/dynamic_node_list.o ${TMP}/quadtree_iterators.o \
+			${TMP}/quadtree_active_iterators.o ${TMP}/evaluator.o
 
 main.out:main.cpp ${TMP} libquadtree.a
 	${CC} ${CFLAG} $< -o $@ -lquadtree -L.
 
 all:create_dir libquadtree.a
 
-.INTERMEDIATE:${TMP}/rect.o ${TMP}/quadtree.o ${TMP}/point.o ${TMP}/node.o ${TMP}/trapezium.o ${TMP}/node_accessor.o ${TMP}/node_pool.o ${TMP}/node_iterator.o ${TMP}/node_iterators.o
+.INTERMEDIATE:${FILES}
 
 .PHONY: create_dir all clear test
 
@@ -29,7 +35,7 @@ clear: create_dir
 ${TMP}/%.o : ${SRC}/%.cpp
 	${CC} ${CFLAG} -c $< -o $@
 
-libquadtree.a:${TMP}/rect.o ${TMP}/quadtree.o ${TMP}/point.o ${TMP}/node.o ${TMP}/trapezium.o ${TMP}/node_accessor.o ${TMP}/node_pool.o ${TMP}/node_iterator.o ${TMP}/node_iterators.o ${TMP}/node_viewer.o ${TMP}/calling_stack.o ${TMP}/dynamic_node_list.o ${TMP}/quadtree_iterators.o
+libquadtree.a:${FILES}
 	${AR} $@ $^
 
 test:

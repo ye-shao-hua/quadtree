@@ -15,8 +15,8 @@ public:
   ~NodeAccessor();
   const Node *operator->() const;
   Node *operator->();
-  [[nodiscard]] const Node &operator*() const;
-  [[nodiscard]] Node &operator*();
+  [[nodiscard]] const Node &operator*() const = delete;
+  [[nodiscard]] Node &operator*() = delete;
   [[nodiscard]] bool accessible() const;
   [[nodiscard]] bool unaccessible() const;
   [[nodiscard]] NodeViewer view();
