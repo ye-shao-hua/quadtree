@@ -69,9 +69,11 @@ int main() {
     std::clog << q(0.6235, 0.3735) << "\n";
     std::clog << q(0.6255, 0.3735) << "\n";
     */
+    /*
     for(auto & it : q.active_node_iterators()) {
         it->value();
     }
+    */
     for (int i = 0; i < 1000; ++i) {
       for (int j = 0; j < 1000; ++j) {
 
