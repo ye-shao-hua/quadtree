@@ -115,7 +115,7 @@ const NodeIterators Node::child_iterators() const {
       const_cast<NodeViewer *>(dynamic_cast<const NodeViewer *>(_child)), 4};
 }
 
-NodeViewer Node::up() { return const_cast<Node *>(this)->up(); }
+NodeViewer Node::up() {return const_cast<const Node *>(this)->up(); }
 
 const NodeViewer Node::up() const {
   static bool valid = false;
@@ -148,7 +148,7 @@ Node::value_type Node::up_value() const {
   return _cache_up->value();
 }
 
-NodeViewer Node::down() { return const_cast<Node *>(this)->down(); }
+NodeViewer Node::down() { return const_cast<const Node *>(this)->down(); }
 
 const NodeViewer Node::down() const {
   static bool valid = false;
@@ -181,7 +181,7 @@ Node::value_type Node::down_value() const {
   return _cache_down->value();
 }
 
-NodeViewer Node::left() { return const_cast<Node *>(this)->left(); }
+NodeViewer Node::left() { return const_cast<const Node *>(this)->left(); }
 
 const NodeViewer Node::left() const {
   static bool valid = false;
@@ -214,7 +214,7 @@ Node::value_type Node::left_value() const {
   return _cache_left->value();
 }
 
-NodeViewer Node::right() { return const_cast<Node *>(this)->right(); }
+NodeViewer Node::right() { return const_cast<const Node *>(this)->right(); }
 
 const NodeViewer Node::right() const {
   static bool valid = false;
