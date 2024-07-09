@@ -12,7 +12,7 @@
 
 int main() {
   {
-    quadtree::Quadtree q{quadtree::Rect{-0.f, 1.f, 0.f, 1.f}};
+    quadtree::Quadtree q{quadtree::Rect{0.f, 1.f, 0.f, 1.f}};
     q.refine_global(4);
     std::clog << "begin\n";
 
@@ -53,7 +53,7 @@ int main() {
         */
         }
 
-        q.set_value(quadtree::Trapezium{quadtree::Point{0.15f, 0.65f}, 0.6f,
+        q.set_value(quadtree::Trapezium{quadtree::Point{0.15f, 0.75f}, 0.6f,
                                         0.01f, -0.5f, 0.5f},
                     1.f);
         q.set_value(quadtree::Trapezium{quadtree::Point{0.15f, 0.55f}, 0.6f,
@@ -111,6 +111,19 @@ int main() {
       }
       std::cout << "\n";
     }
+  //计算结果
+    double x,y,dx,sum;
+    x=0.15f;
+    y=0.565f;
+    dx=0.6/100;
+    sum=0;
+    for(auto i=0;i<100;++i){
+        sum=sum+q(x,y)*dx;
+        x+=dx;
+    }
+    std::cout<<"\n"<<sum<<"\n";
+
   }
   // std::cin.ignore();
+  
 }

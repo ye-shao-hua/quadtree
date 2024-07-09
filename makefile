@@ -1,6 +1,6 @@
 CC=g++
-#CFLAG=-O3 -g -std=c++11 -flto
-CFLAG=-O3 -g -std=c++11
+CFLAG=-O3 -std=c++11 -flto
+#CFLAG=-O0 -g -std=c++11
 AR=ar rcs
 SRC=./src
 INC=./include/quadtree
