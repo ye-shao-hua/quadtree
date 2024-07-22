@@ -13,16 +13,18 @@
 int main() {
   {
     quadtree::Quadtree q{quadtree::Rect{0.f, 1.f, 0.f, 1.f}};
-    q.refine_global(4);
+    q.refine_global(5);
     std::clog << "begin\n";
 
     int nn = 1;
     auto start = std::chrono::steady_clock::now();
-    for (int n = 0; n < 5; ++n) {
+    for (int n = 0; n < 4; ++n) {
       std::clog << "refine\n";
+      //q.refine_global(1);
       q.execute_refine_and_coarsen();
-      for (int i = 0; i < 100; ++i) {
+      for (int i = 0; i < 1000; ++i) {
         for (auto &it : q.active_node_iterators()){
+            
             double h1,h2;//水平方向的左段，右段，以及二阶导。
             h1=(it->box_size().center().x())-(it->left()->box_size().center().x());
             h2=(it->right()->box_size().center().x())-(it->box_size().center().x());
@@ -37,23 +39,22 @@ int main() {
             }else{
                 it->value(
                             (
-                                (h2+h1)*(h1*it->right_value()+h2*it->left_value())*std::pow(v1,2)*std::pow(v2,2)
-                                +std::pow(h1,2)*std::pow(h2,2)*(v1*it->up_value()+v2*it->down_value())*(v2+v1)
-                            )/
-                            (
-                                std::pow(h1+h2,2)*std::pow(v1,2)*std::pow(v2,2)+std::pow(h1,2)*std::pow(h2,2)*std::pow(v1+v2,2)
+                                std::pow(v2,2)*v1*(h1*it->right_value()+h2*it->left_value())+std::pow(h2,2)*h1*(v1*it->up_value()+v2*it->down_value())
+                            )/(
+                                std::pow(v2,2)*v1*(h1+h2)+std::pow(h2,2)*h1*(v1+v2)
                             )
+
                         );
             }
             
-        /*
-          it->value((it->up_value() + it->down_value() + it->right_value() +
-                     it->left_value()) /
-                    4);
-        */
+        
+          //it->value((it->up_value() + it->down_value() + it->right_value() +
+            //         it->left_value()) /
+              //      4);
+        
         }
 
-        q.set_value(quadtree::Trapezium{quadtree::Point{0.15f, 0.75f}, 0.6f,
+        q.set_value(quadtree::Trapezium{quadtree::Point{0.15f, 0.65f}, 0.6f,
                                         0.01f, -0.5f, 0.5f},
                     1.f);
         q.set_value(quadtree::Trapezium{quadtree::Point{0.15f, 0.55f}, 0.6f,
@@ -114,14 +115,15 @@ int main() {
   //计算结果
     double x,y,dx,sum;
     x=0.15f;
-    y=0.565f;
+    y=0.57f;
     dx=0.6/100;
     sum=0;
     for(auto i=0;i<100;++i){
-        sum=sum+q(x,y)*dx;
+        sum=sum+(q.at(x,y)->value()/0.01)*dx;
+        //std::clog<<q(x,y)<<"\n";
         x+=dx;
     }
-    std::cout<<"\n"<<sum<<"\n";
+    std::clog<<"\n"<<sum<<"\n";
 
   }
   // std::cin.ignore();
